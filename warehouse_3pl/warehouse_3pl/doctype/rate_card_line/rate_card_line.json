@@ -1,0 +1,53 @@
+{
+ "actions": [],
+ "creation": "2026-03-29 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "activity_type",
+  "uom",
+  "rate",
+  "minimum_charge"
+ ],
+ "fields": [
+  {
+   "fieldname": "activity_type",
+   "fieldtype": "Select",
+   "label": "Activity Type",
+   "options": "Receiving\nStorage\nPicking\nPacking\nShipping\nVAS-Kitting\nVAS-Labeling\nVAS-QC\nVAS-Repacking\nVAS-Shrink Wrap",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Select",
+   "label": "UOM",
+   "options": "Per Pallet\nPer Unit\nPer Order\nPer Line\nPer Sqft\nPer Month\nPer Kg",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "minimum_charge",
+   "fieldtype": "Currency",
+   "label": "Minimum Charge",
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Rate Card Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "states": []
+}

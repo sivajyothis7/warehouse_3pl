@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "autoname": "format:{zone}-{aisle}-{rack}-{level}-{bin_code}",
+ "creation": "2026-03-29 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "warehouse",
+  "zone",
+  "aisle",
+  "rack",
+  "level",
+  "bin_code",
+  "barcode",
+  "column_break_1",
+  "temperature_zone",
+  "location_type",
+  "status",
+  "owning_client",
+  "section_capacity",
+  "max_weight_kg",
+  "max_volume_cbm"
+ ],
+ "fields": [
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "zone",
+   "fieldtype": "Data",
+   "label": "Zone",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "aisle",
+   "fieldtype": "Data",
+   "label": "Aisle",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rack",
+   "fieldtype": "Data",
+   "label": "Rack",
+   "reqd": 1
+  },
+  {
+   "fieldname": "level",
+   "fieldtype": "Data",
+   "label": "Level",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bin_code",
+   "fieldtype": "Data",
+   "label": "Bin Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "barcode",
+   "fieldtype": "Data",
+   "label": "Barcode",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "temperature_zone",
+   "fieldtype": "Select",
+   "label": "Temperature Zone",
+   "options": "\nFrozen\nRefrigerated\nCool\nControlled Ambient\nAmbient",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "location_type",
+   "fieldtype": "Select",
+   "label": "Location Type",
+   "options": "Pick Face\nReserve\nStaging\nDock\nQC Hold\nShipping Dock\nReceiving Dock",
+   "default": "Reserve",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Available\nOccupied\nBlocked\nMaintenance",
+   "default": "Available",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "owning_client",
+   "fieldtype": "Link",
+   "label": "Owning Client",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "section_capacity",
+   "fieldtype": "Section Break",
+   "label": "Capacity"
+  },
+  {
+   "fieldname": "max_weight_kg",
+   "fieldtype": "Float",
+   "label": "Max Weight (kg)"
+  },
+  {
+   "fieldname": "max_volume_cbm",
+   "fieldtype": "Float",
+   "label": "Max Volume (cbm)"
+  }
+ ],
+ "links": [],
+ "modified": "2026-03-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Warehouse Location",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "states": [],
+ "track_changes": 1
+}

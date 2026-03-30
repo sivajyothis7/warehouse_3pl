@@ -54,10 +54,10 @@ def get_custom_fields():
             },
             {
                 "fieldname": "active_rate_card",
-                "fieldtype": "Data",
+                "fieldtype": "Link",
                 "label": "Active Rate Card",
                 "insert_after": "carrier_preferences",
-                "description": "Will be converted to Link field after Rate Card doctype is created",
+                "options": "Rate Card",
                 "depends_on": "eval:doc.is_3pl_client",
             },
             {
