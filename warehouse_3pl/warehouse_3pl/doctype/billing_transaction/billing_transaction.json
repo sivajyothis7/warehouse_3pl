@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-03-30 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "client",
+  "activity_type",
+  "transaction_date",
+  "billing_period",
+  "column_break_1",
+  "source_doctype",
+  "source_name",
+  "invoiced",
+  "sales_invoice",
+  "section_billing_details",
+  "item_code",
+  "qty",
+  "uom",
+  "column_break_2",
+  "rate",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BT-.YYYY.-.#####",
+   "hidden": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "activity_type",
+   "fieldtype": "Select",
+   "label": "Activity Type",
+   "options": "Receiving\nStorage\nPicking\nPacking\nShipping\nVAS-Kitting\nVAS-Labeling\nVAS-QC\nVAS-Repacking\nVAS-Shrink Wrap",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Transaction Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "billing_period",
+   "fieldtype": "Data",
+   "label": "Billing Period",
+   "description": "e.g. 2026-03"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "source_doctype",
+   "fieldtype": "Data",
+   "label": "Source Doctype",
+   "read_only": 1
+  },
+  {
+   "fieldname": "source_name",
+   "fieldtype": "Data",
+   "label": "Source Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "invoiced",
+   "fieldtype": "Check",
+   "label": "Invoiced",
+   "default": "0",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1,
+   "depends_on": "invoiced"
+  },
+  {
+   "fieldname": "section_billing_details",
+   "fieldtype": "Section Break",
+   "label": "Billing Details"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Qty",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Select",
+   "label": "UOM",
+   "options": "Per Pallet\nPer Unit\nPer Order\nPer Line\nPer Sqft\nPer Month\nPer Kg",
+   "default": "Per Unit"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "in_list_view": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-03-30 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Billing Transaction",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "states": [],
+ "track_changes": 1
+}
