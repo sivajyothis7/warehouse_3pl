@@ -85,6 +85,8 @@ required_apps = ["erpnext"]
 # before_install = "warehouse_3pl.install.before_install"
 # after_install = "warehouse_3pl.install.after_install"
 
+after_install = "warehouse_3pl.warehouse_3pl.custom_fields.setup.setup_custom_fields"
+
 # Uninstallation
 # ------------
 
