@@ -1,0 +1,155 @@
+{
+ "actions": [],
+ "autoname": "field:policy_name",
+ "creation": "2026-03-29 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "policy_name",
+  "client",
+  "temperature_zone",
+  "item_group",
+  "priority",
+  "section_operational_rules",
+  "rotation_rule",
+  "putaway_strategy",
+  "picking_strategy",
+  "column_break_operational",
+  "qc_required",
+  "qc_sampling_pct",
+  "hazmat_segregation_required",
+  "section_expiry_management",
+  "expiry_alert_days",
+  "min_remaining_shelf_life_pct"
+ ],
+ "fields": [
+  {
+   "fieldname": "policy_name",
+   "fieldtype": "Data",
+   "label": "Policy Name",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Customer",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "temperature_zone",
+   "fieldtype": "Select",
+   "label": "Temperature Zone",
+   "options": "\nFrozen\nRefrigerated\nCool\nControlled Ambient\nAmbient"
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "label": "Item Group",
+   "options": "Item Group"
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority",
+   "default": "0",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "section_operational_rules",
+   "fieldtype": "Section Break",
+   "label": "Operational Rules"
+  },
+  {
+   "fieldname": "rotation_rule",
+   "fieldtype": "Select",
+   "label": "Rotation Rule",
+   "options": "FIFO\nFEFO\nLIFO",
+   "reqd": 1,
+   "default": "FIFO"
+  },
+  {
+   "fieldname": "putaway_strategy",
+   "fieldtype": "Select",
+   "label": "Putaway Strategy",
+   "options": "Directed\nNearest Available\nClient Zone\nConsolidate",
+   "reqd": 1,
+   "default": "Directed"
+  },
+  {
+   "fieldname": "picking_strategy",
+   "fieldtype": "Select",
+   "label": "Picking Strategy",
+   "options": "Single Order\nBatch\nZone\nCluster",
+   "reqd": 1,
+   "default": "Single Order"
+  },
+  {
+   "fieldname": "column_break_operational",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "qc_required",
+   "fieldtype": "Check",
+   "label": "QC Required",
+   "default": "0"
+  },
+  {
+   "fieldname": "qc_sampling_pct",
+   "fieldtype": "Float",
+   "label": "QC Sampling %",
+   "depends_on": "eval:doc.qc_required"
+  },
+  {
+   "fieldname": "hazmat_segregation_required",
+   "fieldtype": "Check",
+   "label": "Hazmat Segregation Required",
+   "default": "0"
+  },
+  {
+   "fieldname": "section_expiry_management",
+   "fieldtype": "Section Break",
+   "label": "Expiry Management"
+  },
+  {
+   "fieldname": "expiry_alert_days",
+   "fieldtype": "Int",
+   "label": "Expiry Alert Days",
+   "default": "30"
+  },
+  {
+   "fieldname": "min_remaining_shelf_life_pct",
+   "fieldtype": "Float",
+   "label": "Min Remaining Shelf Life %",
+   "default": "0"
+  }
+ ],
+ "links": [],
+ "modified": "2026-03-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Inventory Policy",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "priority",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
