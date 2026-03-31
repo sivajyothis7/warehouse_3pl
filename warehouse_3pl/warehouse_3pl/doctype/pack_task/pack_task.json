@@ -31,8 +31,9 @@
   },
   {
    "fieldname": "pick_task",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Pick Task",
+   "options": "Pick Task",
    "in_list_view": 1
   },
   {
