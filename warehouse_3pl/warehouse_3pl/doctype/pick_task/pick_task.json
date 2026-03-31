@@ -30,8 +30,9 @@
   },
   {
    "fieldname": "wave",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Wave",
+   "options": "Wave",
    "in_list_view": 1
   },
   {
