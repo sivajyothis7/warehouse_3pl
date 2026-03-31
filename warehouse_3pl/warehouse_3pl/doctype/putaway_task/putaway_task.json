@@ -34,8 +34,9 @@
   },
   {
    "fieldname": "receiving_ref",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Receiving Ref",
+   "options": "Receiving",
    "in_list_view": 1
   },
   {
