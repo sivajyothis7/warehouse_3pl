@@ -1,0 +1,62 @@
+{
+ "actions": [],
+ "creation": "2026-03-30 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "qty",
+  "uom",
+  "lot_preference",
+  "allocated_qty"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Qty",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM",
+   "default": "Nos",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "lot_preference",
+   "fieldtype": "Data",
+   "label": "Lot Preference"
+  },
+  {
+   "fieldname": "allocated_qty",
+   "fieldtype": "Float",
+   "label": "Allocated Qty",
+   "read_only": 1,
+   "default": "0",
+   "in_list_view": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-03-30 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Client Order Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "states": []
+}
