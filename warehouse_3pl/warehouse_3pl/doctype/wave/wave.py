@@ -66,3 +66,10 @@ class Wave(Document):
                 })
         if pick_task.items:
             pick_task.insert(ignore_permissions=True)
+
+
+@frappe.whitelist()
+def release_wave(wave_name):
+    wave = frappe.get_doc("Wave", wave_name)
+    wave.release()
+    frappe.db.commit()

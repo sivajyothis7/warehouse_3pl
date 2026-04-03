@@ -42,3 +42,10 @@ class PutawayTask(Document):
         se.insert(ignore_permissions=True)
         se.submit()
         self.db_set("stock_entry", se.name)
+
+
+@frappe.whitelist()
+def complete_putaway(task_name):
+    doc = frappe.get_doc("Putaway Task", task_name)
+    doc.complete()
+    frappe.db.commit()

@@ -86,3 +86,10 @@ class PackTask(Document):
             source_name=self.name,
             uom="Per Order",
         )
+
+
+@frappe.whitelist()
+def complete_pack(pack_name):
+    doc = frappe.get_doc("Pack Task", pack_name)
+    doc.complete()
+    frappe.db.commit()

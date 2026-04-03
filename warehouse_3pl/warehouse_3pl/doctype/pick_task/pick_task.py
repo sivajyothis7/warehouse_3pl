@@ -60,3 +60,16 @@ class PickTask(Document):
                 source_name=self.name,
                 uom="Per Unit",
             )
+
+
+@frappe.whitelist()
+def start_pick(pick_name):
+    doc = frappe.get_doc("Pick Task", pick_name)
+    doc.start()
+    frappe.db.commit()
+
+@frappe.whitelist()
+def complete_pick(pick_name):
+    doc = frappe.get_doc("Pick Task", pick_name)
+    doc.complete()
+    frappe.db.commit()

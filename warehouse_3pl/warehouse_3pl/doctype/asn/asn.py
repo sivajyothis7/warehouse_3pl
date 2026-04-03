@@ -24,3 +24,36 @@ class ASN(Document):
         for row in self.items:
             if row.expected_qty <= 0:
                 frappe.throw(f"Row {row.idx}: Expected Qty must be greater than 0")
+
+
+@frappe.whitelist()
+def make_receiving(source_name, target_doc=None):
+    from frappe.model.mapper import get_mapped_doc
+
+    doc = get_mapped_doc(
+        "ASN",
+        source_name,
+        {
+            "ASN": {
+                "doctype": "Receiving",
+                "field_map": {
+                    "name": "asn",
+                    "client": "client",
+                },
+            },
+            "ASN Line": {
+                "doctype": "Receiving Line",
+                "field_map": {
+                    "item_code": "item_code",
+                    "expected_qty": "expected_qty",
+                    "lot_no": "lot_no",
+                },
+                "postprocess": lambda source, target, source_parent: target.update({
+                    "received_qty": source.expected_qty,
+                    "condition": "Good",
+                }),
+            },
+        },
+        target_doc,
+    )
+    return doc
