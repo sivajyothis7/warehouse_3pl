@@ -1,0 +1,406 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2026-04-03 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "overview_tab",
+  "overview_html",
+  "details_tab",
+  "date",
+  "client",
+  "client_name",
+  "client_ref",
+  "job_status",
+  "remarks",
+  "column_break_details",
+  "branch",
+  "attention",
+  "sales_executive",
+  "naming_series",
+  "section_job_configuration",
+  "job_type",
+  "preceding_job",
+  "reference_type",
+  "storage_terms",
+  "cargo_type",
+  "column_break_job_config",
+  "succeeding_job",
+  "reference",
+  "container_number",
+  "billing_criteria",
+  "section_location",
+  "place_of_receipt",
+  "eta",
+  "column_break_location",
+  "place_of_delivery",
+  "etd",
+  "operations_tab",
+  "section_storage_info",
+  "storage_information",
+  "section_vehicle_info",
+  "vehicle_information",
+  "section_operational_log",
+  "operational_log",
+  "stock_movement_tab",
+  "section_stock_movements",
+  "stock_movements",
+  "section_stock_summary",
+  "total_in_qty",
+  "column_break_stock_summary_1",
+  "total_out_qty",
+  "column_break_stock_summary_2",
+  "balance_qty",
+  "financials_tab",
+  "fetch_vouchers",
+  "section_vouchers",
+  "vouchers",
+  "section_pnl",
+  "total_revenue",
+  "column_break_pnl_1",
+  "total_cost",
+  "column_break_pnl_2",
+  "gross_profit"
+ ],
+ "fields": [
+  {
+   "fieldname": "overview_tab",
+   "fieldtype": "Tab Break",
+   "label": "Overview"
+  },
+  {
+   "fieldname": "overview_html",
+   "fieldtype": "HTML",
+   "label": "Overview"
+  },
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1,
+   "default": "Today",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "fetch_from": "client.customer_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "client_ref",
+   "fieldtype": "Data",
+   "label": "Client Reference"
+  },
+  {
+   "fieldname": "job_status",
+   "fieldtype": "Select",
+   "label": "Job Status",
+   "options": "Created\nConfirmed\nIn Progress\nInvoiced\nCompleted\nClosed\nCancelled",
+   "default": "Created",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_details",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch"
+  },
+  {
+   "fieldname": "attention",
+   "fieldtype": "Data",
+   "label": "Contact Person"
+  },
+  {
+   "fieldname": "sales_executive",
+   "fieldtype": "Link",
+   "label": "Sales Executive",
+   "options": "User"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Data",
+   "label": "Series",
+   "hidden": 1,
+   "default": "WH/.YY./.MM./.####."
+  },
+  {
+   "fieldname": "section_job_configuration",
+   "fieldtype": "Section Break",
+   "label": "Job Configuration"
+  },
+  {
+   "fieldname": "job_type",
+   "fieldtype": "Select",
+   "label": "Job Type",
+   "options": "Warehouse\nCross-Dock\nDistribution",
+   "default": "Warehouse"
+  },
+  {
+   "fieldname": "preceding_job",
+   "fieldtype": "Link",
+   "label": "Preceding Job",
+   "options": "Warehouse Job Record"
+  },
+  {
+   "fieldname": "reference_type",
+   "fieldtype": "Select",
+   "label": "Reference Type",
+   "options": "\nShipment No\nAWB No\nBL No\nBayan No"
+  },
+  {
+   "fieldname": "storage_terms",
+   "fieldtype": "Select",
+   "label": "Storage Terms",
+   "options": "\nDaily\nWeekly\nMonthly\nYearly"
+  },
+  {
+   "fieldname": "cargo_type",
+   "fieldtype": "Select",
+   "label": "Cargo Type",
+   "options": "\nPalletized\nNon-Palletized\nBoth"
+  },
+  {
+   "fieldname": "column_break_job_config",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "succeeding_job",
+   "fieldtype": "Link",
+   "label": "Succeeding Job",
+   "options": "Warehouse Job Record"
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Reference"
+  },
+  {
+   "fieldname": "container_number",
+   "fieldtype": "Data",
+   "label": "Container Number"
+  },
+  {
+   "fieldname": "billing_criteria",
+   "fieldtype": "Select",
+   "label": "Billing Criteria",
+   "options": "\nSqrmtr\nCBM\nPallet\nBox\nUnit"
+  },
+  {
+   "fieldname": "section_location",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "place_of_receipt",
+   "fieldtype": "Data",
+   "label": "Place of Receipt"
+  },
+  {
+   "fieldname": "eta",
+   "fieldtype": "Date",
+   "label": "ETA"
+  },
+  {
+   "fieldname": "column_break_location",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "place_of_delivery",
+   "fieldtype": "Data",
+   "label": "Place of Delivery"
+  },
+  {
+   "fieldname": "etd",
+   "fieldtype": "Date",
+   "label": "ETD"
+  },
+  {
+   "fieldname": "operations_tab",
+   "fieldtype": "Tab Break",
+   "label": "Operations"
+  },
+  {
+   "fieldname": "section_storage_info",
+   "fieldtype": "Section Break",
+   "label": "Storage Information"
+  },
+  {
+   "fieldname": "storage_information",
+   "fieldtype": "Table",
+   "label": "Storage Information",
+   "options": "Job Storage Info"
+  },
+  {
+   "fieldname": "section_vehicle_info",
+   "fieldtype": "Section Break",
+   "label": "Vehicle Information"
+  },
+  {
+   "fieldname": "vehicle_information",
+   "fieldtype": "Table",
+   "label": "Vehicle Information",
+   "options": "Job Vehicle Info"
+  },
+  {
+   "fieldname": "section_operational_log",
+   "fieldtype": "Section Break",
+   "label": "Operational Log"
+  },
+  {
+   "fieldname": "operational_log",
+   "fieldtype": "Table",
+   "label": "Operational Log",
+   "options": "Job Operational Info"
+  },
+  {
+   "fieldname": "stock_movement_tab",
+   "fieldtype": "Tab Break",
+   "label": "Stock Movement"
+  },
+  {
+   "fieldname": "section_stock_movements",
+   "fieldtype": "Section Break",
+   "label": "Stock Movements"
+  },
+  {
+   "fieldname": "stock_movements",
+   "fieldtype": "Table",
+   "label": "Stock Movements",
+   "options": "Job Stock Movement"
+  },
+  {
+   "fieldname": "section_stock_summary",
+   "fieldtype": "Section Break",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "total_in_qty",
+   "fieldtype": "Float",
+   "label": "Total In Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_stock_summary_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_out_qty",
+   "fieldtype": "Float",
+   "label": "Total Out Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_stock_summary_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "balance_qty",
+   "fieldtype": "Float",
+   "label": "Balance Qty",
+   "read_only": 1
+  },
+  {
+   "fieldname": "financials_tab",
+   "fieldtype": "Tab Break",
+   "label": "Financials"
+  },
+  {
+   "fieldname": "fetch_vouchers",
+   "fieldtype": "Button",
+   "label": "Fetch Linked Vouchers"
+  },
+  {
+   "fieldname": "section_vouchers",
+   "fieldtype": "Section Break",
+   "label": "Vouchers"
+  },
+  {
+   "fieldname": "vouchers",
+   "fieldtype": "Table",
+   "label": "Vouchers",
+   "options": "Job Voucher"
+  },
+  {
+   "fieldname": "section_pnl",
+   "fieldtype": "Section Break",
+   "label": "Profit & Loss"
+  },
+  {
+   "fieldname": "total_revenue",
+   "fieldtype": "Currency",
+   "label": "Total Revenue",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_pnl_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_pnl_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gross_profit",
+   "fieldtype": "Currency",
+   "label": "Gross Profit",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-04-03 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Warehouse Job Record",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "states": [],
+ "track_changes": 1
+}

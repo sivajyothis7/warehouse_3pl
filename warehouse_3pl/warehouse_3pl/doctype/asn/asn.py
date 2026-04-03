@@ -39,6 +39,7 @@ def make_receiving(source_name, target_doc=None):
                 "field_map": {
                     "name": "asn",
                     "client": "client",
+                    "warehouse_job": "warehouse_job",
                 },
             },
             "ASN Line": {

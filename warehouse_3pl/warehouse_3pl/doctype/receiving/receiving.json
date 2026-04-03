@@ -9,6 +9,7 @@
   "naming_series",
   "asn",
   "client",
+  "warehouse_job",
   "status",
   "receiving_date",
   "column_break_1",
@@ -45,6 +46,12 @@
    "reqd": 1,
    "in_list_view": 1,
    "in_standard_filter": 1
+  },
+  {
+   "fieldname": "warehouse_job",
+   "fieldtype": "Link",
+   "label": "Warehouse Job",
+   "options": "Warehouse Job Record"
   },
   {
    "fieldname": "status",

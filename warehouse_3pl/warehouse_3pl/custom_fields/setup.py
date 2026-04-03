@@ -242,10 +242,17 @@ def get_custom_fields():
                 "description": "3PL client who owns this inventory",
             },
             {
+                "fieldname": "custom_warehouse_job",
+                "fieldtype": "Link",
+                "label": "Warehouse Job",
+                "insert_after": "client",
+                "options": "Warehouse Job Record",
+            },
+            {
                 "fieldname": "asn_reference",
                 "fieldtype": "Data",
                 "label": "ASN Reference",
-                "insert_after": "client",
+                "insert_after": "custom_warehouse_job",
             },
             {
                 "fieldname": "reason_code",
@@ -272,10 +279,17 @@ def get_custom_fields():
                 "description": "3PL client who owns this shipment",
             },
             {
+                "fieldname": "custom_warehouse_job",
+                "fieldtype": "Link",
+                "label": "Warehouse Job",
+                "insert_after": "client",
+                "options": "Warehouse Job Record",
+            },
+            {
                 "fieldname": "carrier",
                 "fieldtype": "Data",
                 "label": "Carrier",
-                "insert_after": "client",
+                "insert_after": "custom_warehouse_job",
             },
             {
                 "fieldname": "tracking_number",
@@ -295,6 +309,24 @@ def get_custom_fields():
                 "label": "BOL Number",
                 "insert_after": "wave_reference",
                 "description": "Bill of Lading number",
+            },
+        ],
+        "Sales Invoice": [
+            {
+                "fieldname": "custom_warehouse_job",
+                "fieldtype": "Link",
+                "label": "Warehouse Job",
+                "insert_after": "customer",
+                "options": "Warehouse Job Record",
+            },
+        ],
+        "Purchase Invoice": [
+            {
+                "fieldname": "custom_warehouse_job",
+                "fieldtype": "Link",
+                "label": "Warehouse Job",
+                "insert_after": "supplier",
+                "options": "Warehouse Job Record",
             },
         ],
     }

@@ -8,6 +8,7 @@
  "field_order": [
   "naming_series",
   "client",
+  "warehouse_job",
   "client_ref",
   "status",
   "order_date",
@@ -37,6 +38,12 @@
    "reqd": 1,
    "in_list_view": 1,
    "in_standard_filter": 1
+  },
+  {
+   "fieldname": "warehouse_job",
+   "fieldtype": "Link",
+   "label": "Warehouse Job",
+   "options": "Warehouse Job Record"
   },
   {
    "fieldname": "client_ref",
