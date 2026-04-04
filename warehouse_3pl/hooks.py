@@ -6,7 +6,7 @@ app_email = "sayanth@example.com"
 app_license = "mit"
 source_link = "https://github.com/sayanthns/warehouse_3pl"
 app_logo_url = "/assets/warehouse_3pl/images/logo.png"
-docs_url = "https://warehouse-3pl-docs.vercel.app"
+docs_url = "https://docs-site-brown-six.vercel.app"
 
 # Apps
 # ------------------

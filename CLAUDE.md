@@ -186,7 +186,7 @@ frappe.get_all("ASN", filters={"status": "Confirmed"}, fields=["name", "client"]
 
 ## Documentation
 
-Live docs site: https://warehouse-3pl-docs.vercel.app
+Live docs site: https://docs-site-brown-six.vercel.app
 Repo: https://github.com/sayanthns/warehouse-3pl-docs
 
 Built with VitePress + Mermaid diagrams. Covers both user guides and developer/architecture guides.
