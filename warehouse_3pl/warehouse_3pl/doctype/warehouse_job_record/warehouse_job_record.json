@@ -22,12 +22,10 @@
   "naming_series",
   "section_job_configuration",
   "job_type",
-  "preceding_job",
   "reference_type",
   "storage_terms",
   "cargo_type",
   "column_break_job_config",
-  "succeeding_job",
   "reference",
   "container_number",
   "billing_criteria",
@@ -40,8 +38,6 @@
   "operations_tab",
   "section_storage_info",
   "storage_information",
-  "section_vehicle_info",
-  "vehicle_information",
   "section_operational_log",
   "operational_log",
   "stock_movement_tab",
@@ -164,12 +160,6 @@
    "default": "Warehouse"
   },
   {
-   "fieldname": "preceding_job",
-   "fieldtype": "Link",
-   "label": "Preceding Job",
-   "options": "Warehouse Job Record"
-  },
-  {
    "fieldname": "reference_type",
    "fieldtype": "Select",
    "label": "Reference Type",
@@ -190,12 +180,6 @@
   {
    "fieldname": "column_break_job_config",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "succeeding_job",
-   "fieldtype": "Link",
-   "label": "Succeeding Job",
-   "options": "Warehouse Job Record"
   },
   {
    "fieldname": "reference",
@@ -257,17 +241,6 @@
    "fieldtype": "Table",
    "label": "Storage Information",
    "options": "Job Storage Info"
-  },
-  {
-   "fieldname": "section_vehicle_info",
-   "fieldtype": "Section Break",
-   "label": "Vehicle Information"
-  },
-  {
-   "fieldname": "vehicle_information",
-   "fieldtype": "Table",
-   "label": "Vehicle Information",
-   "options": "Job Vehicle Info"
   },
   {
    "fieldname": "section_operational_log",
