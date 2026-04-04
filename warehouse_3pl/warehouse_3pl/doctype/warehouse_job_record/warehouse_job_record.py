@@ -129,7 +129,7 @@ class WarehouseJobRecord(Document):
 
 @frappe.whitelist()
 def get_job_dashboard_data(job_name):
-    """API for the overview dashboard."""
+    """API for the overview dashboard. Calculates live stock from linked docs."""
     job = frappe.get_doc("Warehouse Job Record", job_name)
 
     asn_count = frappe.db.count("ASN", {"warehouse_job": job_name})
@@ -140,14 +140,52 @@ def get_job_dashboard_data(job_name):
         {"warehouse_job": job_name}, "sum(amount)") or 0
     dn_count = frappe.db.count("Delivery Note", {"custom_warehouse_job": job_name})
 
+    # Calculate live stock in from submitted receivings
+    total_in = 0
+    receivings = frappe.get_all("Receiving",
+        filters={"warehouse_job": job_name, "docstatus": 1},
+        pluck="name")
+    for rcv_name in receivings:
+        qty = frappe.db.sql(
+            "SELECT SUM(received_qty) FROM `tabReceiving Line` WHERE parent=%s",
+            rcv_name
+        )
+        total_in += (qty[0][0] or 0) if qty else 0
+
+    # Also count from submitted receivings without docstatus filter (Draft receivings)
+    if not total_in:
+        receivings_all = frappe.get_all("Receiving",
+            filters={"warehouse_job": job_name},
+            pluck="name")
+        for rcv_name in receivings_all:
+            qty = frappe.db.sql(
+                "SELECT SUM(received_qty) FROM `tabReceiving Line` WHERE parent=%s",
+                rcv_name
+            )
+            total_in += (qty[0][0] or 0) if qty else 0
+
+    # Calculate live stock out from submitted delivery notes
+    total_out = 0
+    dns = frappe.get_all("Delivery Note",
+        filters={"custom_warehouse_job": job_name, "docstatus": 1},
+        pluck="name")
+    for dn_name in dns:
+        qty = frappe.db.sql(
+            "SELECT SUM(qty) FROM `tabDelivery Note Item` WHERE parent=%s",
+            dn_name
+        )
+        total_out += (qty[0][0] or 0) if qty else 0
+
+    balance = total_in - total_out
+
     return {
         "client": job.client,
         "client_name": job.client_name,
         "job_status": job.job_status,
         "date": str(job.date),
-        "total_in_qty": job.total_in_qty or 0,
-        "total_out_qty": job.total_out_qty or 0,
-        "balance_qty": job.balance_qty or 0,
+        "total_in_qty": total_in,
+        "total_out_qty": total_out,
+        "balance_qty": balance,
         "total_revenue": job.total_revenue or 0,
         "total_cost": job.total_cost or 0,
         "gross_profit": job.gross_profit or 0,

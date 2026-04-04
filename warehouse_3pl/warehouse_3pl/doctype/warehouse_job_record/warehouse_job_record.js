@@ -1,4 +1,9 @@
 frappe.ui.form.on('Warehouse Job Record', {
+    setup(frm) {
+        frm.set_query('client', function() {
+            return { filters: { 'is_3pl_client': 1 } };
+        });
+    },
     refresh(frm) {
         // === OVERVIEW DASHBOARD ===
         if (!frm.is_new()) {

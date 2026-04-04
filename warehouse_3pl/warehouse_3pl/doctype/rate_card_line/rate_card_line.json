@@ -23,7 +23,7 @@
    "fieldname": "uom",
    "fieldtype": "Select",
    "label": "UOM",
-   "options": "Per Pallet\nPer Unit\nPer Order\nPer Line\nPer Sqft\nPer Month\nPer Kg",
+   "options": "Per Pallet\nPer Unit\nPer Order\nPer Line\nPer Sqft\nPer Day\nPer Month\nPer Kg",
    "reqd": 1,
    "in_list_view": 1
   },

@@ -1,4 +1,9 @@
 frappe.ui.form.on('Receiving', {
+    setup(frm) {
+        frm.set_query('client', function() {
+            return { filters: { 'is_3pl_client': 1 } };
+        });
+    },
     asn(frm) {
         if (frm.doc.asn) {
             frappe.call({
@@ -8,6 +13,9 @@ frappe.ui.form.on('Receiving', {
                     if (r.message) {
                         var asn = r.message;
                         frm.set_value('client', asn.client);
+                        if (asn.warehouse_job) {
+                            frm.set_value('warehouse_job', asn.warehouse_job);
+                        }
                         frm.clear_table('items');
                         (asn.items || []).forEach(function(row) {
                             var child = frm.add_child('items');

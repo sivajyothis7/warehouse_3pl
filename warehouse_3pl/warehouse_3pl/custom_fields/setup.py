@@ -28,9 +28,8 @@ def get_custom_fields():
                 "label": "Client Code",
                 "insert_after": "tpl_section",
                 "unique": 1,
-                "description": "Short unique code e.g. ACME",
+                "description": "Defaults to Customer ID if left blank",
                 "depends_on": "eval:doc.is_3pl_client",
-                "mandatory_depends_on": "eval:doc.is_3pl_client",
             },
             {
                 "fieldname": "default_temp_zone",
