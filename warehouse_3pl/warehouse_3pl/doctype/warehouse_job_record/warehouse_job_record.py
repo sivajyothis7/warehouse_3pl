@@ -128,6 +128,75 @@ class WarehouseJobRecord(Document):
 
 
 @frappe.whitelist()
+def make_delivery_note(job_name):
+    """Create a Delivery Note pre-filled with items from this job's receivings."""
+    job = frappe.get_doc("Warehouse Job Record", job_name)
+
+    dn = frappe.new_doc("Delivery Note")
+    dn.customer = job.client
+    dn.company = job.company
+    dn.custom_warehouse_job = job.name
+    dn.client = job.client
+
+    # Get items from receivings linked to this job
+    receivings = frappe.get_all("Receiving",
+        filters={"warehouse_job": job_name},
+        pluck="name")
+
+    items_map = {}
+    for rcv_name in receivings:
+        lines = frappe.get_all("Receiving Line",
+            filters={"parent": rcv_name},
+            fields=["item_code", "received_qty"])
+        rcv = frappe.get_doc("Receiving", rcv_name)
+        for line in lines:
+            key = line.item_code
+            if key not in items_map:
+                items_map[key] = {
+                    "item_code": line.item_code,
+                    "qty": 0,
+                    "warehouse": rcv.staging_location,
+                }
+            items_map[key]["qty"] += line.received_qty or 0
+
+    for item_data in items_map.values():
+        if item_data["qty"] > 0:
+            dn.append("items", item_data)
+
+    return dn
+
+
+@frappe.whitelist()
+def make_sales_invoice(job_name):
+    """Create a Sales Invoice from billing transactions linked to this job."""
+    job = frappe.get_doc("Warehouse Job Record", job_name)
+
+    si = frappe.new_doc("Sales Invoice")
+    si.customer = job.client
+    si.company = job.company
+    si.custom_warehouse_job = job.name
+
+    # Get billing transactions for this job
+    bts = frappe.get_all("Billing Transaction",
+        filters={"warehouse_job": job_name},
+        fields=["name", "activity_type", "qty", "rate", "amount", "uom"])
+
+    for bt in bts:
+        si.append("items", {
+            "item_name": bt.activity_type,
+            "description": f"{bt.activity_type} - {bt.qty} {bt.uom}",
+            "qty": bt.qty or 1,
+            "rate": bt.rate or 0,
+            "uom": "Nos",
+        })
+
+    if not si.items:
+        frappe.msgprint("No billing transactions found for this job. You can add items manually.")
+
+    return si
+
+
+@frappe.whitelist()
 def get_job_dashboard_data(job_name):
     """API for the overview dashboard. Calculates live stock from linked docs."""
     job = frappe.get_doc("Warehouse Job Record", job_name)

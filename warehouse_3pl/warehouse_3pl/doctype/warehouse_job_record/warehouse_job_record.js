@@ -19,39 +19,64 @@ frappe.ui.form.on('Warehouse Job Record', {
         }
 
         // === ACTION BUTTONS ===
+        if (!frm.is_new() && !['Completed','Closed','Cancelled'].includes(frm.doc.job_status)) {
+            frm.add_custom_button(__('ASN'), function() {
+                frappe.new_doc('ASN', {
+                    client: frm.doc.client,
+                    warehouse_job: frm.doc.name,
+                });
+            }, __('Create'));
+
+            frm.add_custom_button(__('Client Order'), function() {
+                frappe.new_doc('Client Order', {
+                    client: frm.doc.client,
+                    warehouse_job: frm.doc.name,
+                });
+            }, __('Create'));
+
+            frm.add_custom_button(__('Billing Transaction'), function() {
+                frappe.new_doc('Billing Transaction', {
+                    client: frm.doc.client,
+                    warehouse_job: frm.doc.name,
+                });
+            }, __('Create'));
+
+            frm.add_custom_button(__('Delivery Note'), function() {
+                frappe.call({
+                    method: 'warehouse_3pl.warehouse_3pl.doctype.warehouse_job_record.warehouse_job_record.make_delivery_note',
+                    args: { job_name: frm.doc.name },
+                    callback: function(r) {
+                        if (r.message) {
+                            var doc = frappe.model.sync(r.message);
+                            frappe.set_route('Form', 'Delivery Note', doc[0].name);
+                        }
+                    }
+                });
+            }, __('Create'));
+
+            frm.add_custom_button(__('Sales Invoice'), function() {
+                frappe.call({
+                    method: 'warehouse_3pl.warehouse_3pl.doctype.warehouse_job_record.warehouse_job_record.make_sales_invoice',
+                    args: { job_name: frm.doc.name },
+                    callback: function(r) {
+                        if (r.message) {
+                            var doc = frappe.model.sync(r.message);
+                            frappe.set_route('Form', 'Sales Invoice', doc[0].name);
+                        }
+                    }
+                });
+            }, __('Create'));
+
+            frm.add_custom_button(__('Purchase Invoice'), function() {
+                frappe.new_doc('Purchase Invoice', {
+                    company: frm.doc.company,
+                    custom_warehouse_job: frm.doc.name,
+                });
+            }, __('Create'));
+        }
+
+        // === VIEW BUTTONS ===
         if (!frm.is_new()) {
-            // Create ASN
-            if (!['Completed','Closed','Cancelled'].includes(frm.doc.job_status)) {
-                frm.add_custom_button(__('Create ASN'), function() {
-                    frappe.new_doc('ASN', {
-                        client: frm.doc.client,
-                        warehouse_job: frm.doc.name,
-                    });
-                }, __('Create'));
-
-                frm.add_custom_button(__('Create Client Order'), function() {
-                    frappe.new_doc('Client Order', {
-                        client: frm.doc.client,
-                        warehouse_job: frm.doc.name,
-                    });
-                }, __('Create'));
-
-                frm.add_custom_button(__('Create Billing Transaction'), function() {
-                    frappe.new_doc('Billing Transaction', {
-                        client: frm.doc.client,
-                        warehouse_job: frm.doc.name,
-                    });
-                }, __('Create'));
-
-                frm.add_custom_button(__('Create Delivery Note'), function() {
-                    frappe.new_doc('Delivery Note', {
-                        client: frm.doc.client,
-                        custom_warehouse_job: frm.doc.name,
-                    });
-                }, __('Create'));
-            }
-
-            // View linked documents
             frm.add_custom_button(__('ASNs'), function() {
                 frappe.set_route('List', 'ASN', {warehouse_job: frm.doc.name});
             }, __('View'));
@@ -71,25 +96,14 @@ frappe.ui.form.on('Warehouse Job Record', {
             frm.add_custom_button(__('Delivery Notes'), function() {
                 frappe.set_route('List', 'Delivery Note', {custom_warehouse_job: frm.doc.name});
             }, __('View'));
+
+            frm.add_custom_button(__('Invoices'), function() {
+                frappe.set_route('List', 'Sales Invoice', {custom_warehouse_job: frm.doc.name});
+            }, __('View'));
         }
 
-        // === FETCH BUTTONS ===
+        // === FETCH VOUCHERS BUTTON HANDLER ===
         if (!frm.is_new()) {
-            frm.add_custom_button(__('Refresh Stock & Financials'), function() {
-                frappe.call({
-                    method: 'frappe.client.get_list',
-                    args: { doctype: 'Receiving', filters: {warehouse_job: frm.doc.name}, limit_page_length: 1 },
-                    callback: function() {
-                        frm.call('fetch_stock_movements').then(() => {
-                            frm.call('fetch_linked_vouchers').then(() => {
-                                frm.reload_doc();
-                                frappe.show_alert({message: __('Stock movements and financials updated'), indicator: 'green'});
-                            });
-                        });
-                    }
-                });
-            });
-
             frm.fields_dict.fetch_vouchers && frm.fields_dict.fetch_vouchers.$input &&
             frm.fields_dict.fetch_vouchers.$input.off('click').on('click', function() {
                 frm.call('fetch_linked_vouchers').then(() => {
@@ -185,7 +199,6 @@ function render_overview(frm, data) {
         </div>
     </div>`;
 
-    // Set the HTML field
     if (frm.fields_dict.overview_html) {
         frm.fields_dict.overview_html.$wrapper.html(html);
     }

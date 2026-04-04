@@ -38,7 +38,11 @@ class Receiving(Document):
             self.client = frappe.db.get_value("ASN", self.asn, "client")
 
     def create_stock_entry(self):
-        company = frappe.db.get_value("Warehouse", self.staging_location, "company")
+        company = None
+        if self.warehouse_job:
+            company = frappe.db.get_value("Warehouse Job Record", self.warehouse_job, "company")
+        if not company:
+            company = frappe.db.get_value("Warehouse", self.staging_location, "company")
         if not company:
             company = frappe.db.get_single_value("Global Defaults", "default_company")
 

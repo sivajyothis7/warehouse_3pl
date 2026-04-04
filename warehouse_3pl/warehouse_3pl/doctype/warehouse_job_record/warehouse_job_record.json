@@ -15,6 +15,7 @@
   "client_ref",
   "job_status",
   "remarks",
+  "company",
   "column_break_details",
   "branch",
   "attention",
@@ -119,6 +120,14 @@
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "default": "{default_company}"
   },
   {
    "fieldname": "column_break_details",
