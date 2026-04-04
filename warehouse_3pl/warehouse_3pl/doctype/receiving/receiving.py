@@ -47,6 +47,11 @@ class Receiving(Document):
             company = frappe.db.get_single_value("Global Defaults", "default_company")
 
         cost_center = frappe.db.get_value("Company", company, "cost_center")
+        if not cost_center:
+            cost_center = frappe.db.get_value("Cost Center", {"company": company, "is_group": 0}, "name")
+        if not cost_center:
+            # Create a default cost center
+            cost_center = f"Main - {frappe.db.get_value('Company', company, 'abbr')}"
 
         se = frappe.get_doc({
             "doctype": "Stock Entry",
