@@ -334,5 +334,5 @@ def get_custom_fields():
 
 def setup_custom_fields():
     """Create all custom fields. Called from hooks.py after_install."""
-    create_custom_fields(get_custom_fields())
+    create_custom_fields(get_custom_fields(), ignore_validate=True)
     frappe.db.commit()
