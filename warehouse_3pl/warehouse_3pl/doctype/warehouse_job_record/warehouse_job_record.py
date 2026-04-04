@@ -52,9 +52,9 @@ class WarehouseJobRecord(Document):
                 "party_type": "Customer",
             })
 
-        # Sales Invoices
+        # Sales Invoices (submitted and draft)
         sis = frappe.get_all("Sales Invoice",
-            filters={"custom_warehouse_job": self.name, "docstatus": 1},
+            filters={"custom_warehouse_job": self.name, "docstatus": ["in", [0, 1]]},
             fields=["name", "posting_date", "grand_total", "customer"])
         for si in sis:
             self.append("vouchers", {
@@ -66,9 +66,9 @@ class WarehouseJobRecord(Document):
                 "party_type": "Customer",
             })
 
-        # Purchase Invoices
+        # Purchase Invoices (submitted and draft)
         pis = frappe.get_all("Purchase Invoice",
-            filters={"custom_warehouse_job": self.name, "docstatus": 1},
+            filters={"custom_warehouse_job": self.name, "docstatus": ["in", [0, 1]]},
             fields=["name", "posting_date", "grand_total", "supplier"])
         for pi in pis:
             self.append("vouchers", {
@@ -80,9 +80,9 @@ class WarehouseJobRecord(Document):
                 "party_type": "Supplier",
             })
 
-        # Journal Entries (expenses against job)
+        # Journal Entries (submitted and draft)
         jes = frappe.get_all("Journal Entry",
-            filters={"custom_warehouse_job": self.name, "docstatus": 1},
+            filters={"custom_warehouse_job": self.name, "docstatus": ["in", [0, 1]]},
             fields=["name", "posting_date", "total_debit", "remark"])
         for je in jes:
             self.append("vouchers", {
@@ -226,17 +226,17 @@ def get_job_dashboard_data(job_name):
     billing_total = frappe.db.get_value("Billing Transaction",
         {"warehouse_job": job_name}, "sum(amount)") or 0
     dn_count = frappe.db.count("Delivery Note", {"custom_warehouse_job": job_name})
-    si_count = frappe.db.count("Sales Invoice", {"custom_warehouse_job": job_name, "docstatus": 1})
-    pi_count = frappe.db.count("Purchase Invoice", {"custom_warehouse_job": job_name, "docstatus": 1})
-    je_count = frappe.db.count("Journal Entry", {"custom_warehouse_job": job_name, "docstatus": 1})
+    si_count = frappe.db.count("Sales Invoice", {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]})
+    pi_count = frappe.db.count("Purchase Invoice", {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]})
+    je_count = frappe.db.count("Journal Entry", {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]})
 
-    # Live P&L from submitted docs
+    # Live P&L from submitted and draft docs
     si_total = frappe.db.get_value("Sales Invoice",
-        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(grand_total)") or 0
+        {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]}, "sum(grand_total)") or 0
     pi_total = frappe.db.get_value("Purchase Invoice",
-        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(grand_total)") or 0
+        {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]}, "sum(grand_total)") or 0
     je_total = frappe.db.get_value("Journal Entry",
-        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(total_debit)") or 0
+        {"custom_warehouse_job": job_name, "docstatus": ["in", [0, 1]]}, "sum(total_debit)") or 0
 
     total_revenue = billing_total + si_total
     total_cost = pi_total + je_total
