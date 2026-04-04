@@ -46,6 +46,8 @@ class Receiving(Document):
         if not company:
             company = frappe.db.get_single_value("Global Defaults", "default_company")
 
+        cost_center = frappe.db.get_value("Company", company, "cost_center")
+
         se = frappe.get_doc({
             "doctype": "Stock Entry",
             "stock_entry_type": "Material Receipt",
@@ -67,6 +69,7 @@ class Receiving(Document):
                 "t_warehouse": self.staging_location,
                 "basic_rate": 0,
                 "allow_zero_valuation_rate": 1,
+                "cost_center": cost_center,
             }
             se.append("items", se_item)
 
