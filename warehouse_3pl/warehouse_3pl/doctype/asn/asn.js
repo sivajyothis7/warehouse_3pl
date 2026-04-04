@@ -4,6 +4,15 @@ frappe.ui.form.on('ASN', {
             return { filters: { 'is_3pl_client': 1 } };
         });
     },
+    warehouse_job(frm) {
+        if (frm.doc.warehouse_job) {
+            frappe.db.get_value('Warehouse Job Record', frm.doc.warehouse_job, 'client', function(r) {
+                if (r && r.client) {
+                    frm.set_value('client', r.client);
+                }
+            });
+        }
+    },
     refresh(frm) {
         if (frm.doc.docstatus === 1 && !['Received','Closed','Cancelled'].includes(frm.doc.status)) {
             frm.add_custom_button(__('Create Receiving'), function() {

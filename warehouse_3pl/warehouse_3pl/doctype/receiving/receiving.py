@@ -48,6 +48,7 @@ class Receiving(Document):
             "posting_date": self.receiving_date or today(),
             "company": company,
             "client": self.client,
+            "custom_warehouse_job": self.warehouse_job or "",
             "asn_reference": self.asn or "",
             "reason_code": "Receiving",
             "items": [],
@@ -115,6 +116,7 @@ class Receiving(Document):
             source_name=self.name,
             uom="Per Unit",
             transaction_date=self.receiving_date,
+            warehouse_job=self.warehouse_job,
         )
         if bt_name:
             self.db_set("billing_transaction", bt_name)

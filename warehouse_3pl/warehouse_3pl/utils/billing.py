@@ -3,7 +3,8 @@ from warehouse_3pl.warehouse_3pl.doctype.rate_card.rate_card import get_rate
 
 
 def create_billing_transaction(client, activity_type, qty, source_doctype, source_name,
-                                item_code=None, uom="Per Unit", transaction_date=None):
+                                item_code=None, uom="Per Unit", transaction_date=None,
+                                warehouse_job=None):
     rate, _minimum = get_rate(client, activity_type, uom)
     if not rate and not _minimum:
         return None
@@ -20,6 +21,7 @@ def create_billing_transaction(client, activity_type, qty, source_doctype, sourc
         "source_doctype": source_doctype,
         "source_name": source_name,
         "transaction_date": transaction_date,
+        "warehouse_job": warehouse_job or "",
     })
     bt.insert(ignore_permissions=True)
     return bt.name

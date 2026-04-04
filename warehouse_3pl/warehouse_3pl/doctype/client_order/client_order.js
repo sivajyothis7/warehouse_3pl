@@ -1,4 +1,18 @@
 frappe.ui.form.on('Client Order', {
+    setup(frm) {
+        frm.set_query('client', function() {
+            return { filters: { 'is_3pl_client': 1 } };
+        });
+    },
+    warehouse_job(frm) {
+        if (frm.doc.warehouse_job && !frm.doc.client) {
+            frappe.db.get_value('Warehouse Job Record', frm.doc.warehouse_job, 'client', function(r) {
+                if (r && r.client) {
+                    frm.set_value('client', r.client);
+                }
+            });
+        }
+    },
     refresh(frm) {
         if (frm.doc.docstatus === 1 && ['Confirmed','Allocated'].includes(frm.doc.status)) {
             frm.add_custom_button(__('Create Wave'), function() {

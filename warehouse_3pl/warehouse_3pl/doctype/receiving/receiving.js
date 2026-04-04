@@ -4,6 +4,15 @@ frappe.ui.form.on('Receiving', {
             return { filters: { 'is_3pl_client': 1 } };
         });
     },
+    warehouse_job(frm) {
+        if (frm.doc.warehouse_job && !frm.doc.client) {
+            frappe.db.get_value('Warehouse Job Record', frm.doc.warehouse_job, 'client', function(r) {
+                if (r && r.client) {
+                    frm.set_value('client', r.client);
+                }
+            });
+        }
+    },
     asn(frm) {
         if (frm.doc.asn) {
             frappe.call({

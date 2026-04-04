@@ -35,6 +35,20 @@ frappe.ui.form.on('Warehouse Job Record', {
                         warehouse_job: frm.doc.name,
                     });
                 }, __('Create'));
+
+                frm.add_custom_button(__('Create Billing Transaction'), function() {
+                    frappe.new_doc('Billing Transaction', {
+                        client: frm.doc.client,
+                        warehouse_job: frm.doc.name,
+                    });
+                }, __('Create'));
+
+                frm.add_custom_button(__('Create Delivery Note'), function() {
+                    frappe.new_doc('Delivery Note', {
+                        client: frm.doc.client,
+                        custom_warehouse_job: frm.doc.name,
+                    });
+                }, __('Create'));
             }
 
             // View linked documents
@@ -61,6 +75,21 @@ frappe.ui.form.on('Warehouse Job Record', {
 
         // === FETCH BUTTONS ===
         if (!frm.is_new()) {
+            frm.add_custom_button(__('Refresh Stock & Financials'), function() {
+                frappe.call({
+                    method: 'frappe.client.get_list',
+                    args: { doctype: 'Receiving', filters: {warehouse_job: frm.doc.name}, limit_page_length: 1 },
+                    callback: function() {
+                        frm.call('fetch_stock_movements').then(() => {
+                            frm.call('fetch_linked_vouchers').then(() => {
+                                frm.reload_doc();
+                                frappe.show_alert({message: __('Stock movements and financials updated'), indicator: 'green'});
+                            });
+                        });
+                    }
+                });
+            });
+
             frm.fields_dict.fetch_vouchers && frm.fields_dict.fetch_vouchers.$input &&
             frm.fields_dict.fetch_vouchers.$input.off('click').on('click', function() {
                 frm.call('fetch_linked_vouchers').then(() => {
@@ -68,6 +97,16 @@ frappe.ui.form.on('Warehouse Job Record', {
                     frappe.show_alert({message: __('Vouchers fetched'), indicator: 'green'});
                 });
             });
+        }
+
+        // === AUTO-FETCH STOCK MOVEMENTS on first load if empty ===
+        if (!frm.is_new() && !frm.__stock_fetched) {
+            frm.__stock_fetched = true;
+            if (!frm.doc.stock_movements || frm.doc.stock_movements.length === 0) {
+                frm.call('fetch_stock_movements').then(() => {
+                    frm.reload_doc();
+                });
+            }
         }
     },
 
