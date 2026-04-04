@@ -126,8 +126,7 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company",
-   "reqd": 1,
-   "default": "{default_company}"
+   "reqd": 1
   },
   {
    "fieldname": "column_break_details",

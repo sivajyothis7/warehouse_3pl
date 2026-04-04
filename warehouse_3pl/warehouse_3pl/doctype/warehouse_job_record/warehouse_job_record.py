@@ -4,9 +4,14 @@ from frappe.model.document import Document
 
 class WarehouseJobRecord(Document):
     def validate(self):
+        self.set_default_company()
         self.validate_client_is_3pl()
         self.calculate_stock_summary()
         self.calculate_pnl()
+
+    def set_default_company(self):
+        if not self.company:
+            self.company = frappe.db.get_single_value("Global Defaults", "default_company")
 
     def validate_client_is_3pl(self):
         if self.client:
@@ -23,7 +28,7 @@ class WarehouseJobRecord(Document):
 
     def calculate_pnl(self):
         revenue = sum(row.amount or 0 for row in self.vouchers if row.voucher_type in ["Sales Invoice", "Billing Transaction"])
-        cost = sum(row.amount or 0 for row in self.vouchers if row.voucher_type == "Purchase Invoice")
+        cost = sum(row.amount or 0 for row in self.vouchers if row.voucher_type in ["Purchase Invoice", "Journal Entry"])
         self.total_revenue = revenue
         self.total_cost = cost
         self.gross_profit = revenue - cost
@@ -73,6 +78,19 @@ class WarehouseJobRecord(Document):
                 "amount": pi.grand_total or 0,
                 "party": pi.supplier,
                 "party_type": "Supplier",
+            })
+
+        # Journal Entries (expenses against job)
+        jes = frappe.get_all("Journal Entry",
+            filters={"custom_warehouse_job": self.name, "docstatus": 1},
+            fields=["name", "posting_date", "total_debit", "remark"])
+        for je in jes:
+            self.append("vouchers", {
+                "voucher_type": "Journal Entry",
+                "voucher_no": je.name,
+                "voucher_date": je.posting_date,
+                "amount": je.total_debit or 0,
+                "party": je.remark or "",
             })
 
         self.calculate_pnl()

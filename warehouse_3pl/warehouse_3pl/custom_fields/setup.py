@@ -328,6 +328,15 @@ def get_custom_fields():
                 "options": "Warehouse Job Record",
             },
         ],
+        "Journal Entry": [
+            {
+                "fieldname": "custom_warehouse_job",
+                "fieldtype": "Link",
+                "label": "Warehouse Job",
+                "insert_after": "voucher_type",
+                "options": "Warehouse Job Record",
+            },
+        ],
     }
 
 

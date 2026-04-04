@@ -73,6 +73,14 @@ frappe.ui.form.on('Warehouse Job Record', {
                     custom_warehouse_job: frm.doc.name,
                 });
             }, __('Create'));
+
+            frm.add_custom_button(__('Journal Entry'), function() {
+                frappe.new_doc('Journal Entry', {
+                    company: frm.doc.company,
+                    custom_warehouse_job: frm.doc.name,
+                    voucher_type: 'Journal Entry',
+                });
+            }, __('Create'));
         }
 
         // === VIEW BUTTONS ===
@@ -99,6 +107,10 @@ frappe.ui.form.on('Warehouse Job Record', {
 
             frm.add_custom_button(__('Invoices'), function() {
                 frappe.set_route('List', 'Sales Invoice', {custom_warehouse_job: frm.doc.name});
+            }, __('View'));
+
+            frm.add_custom_button(__('Expenses'), function() {
+                frappe.set_route('List', 'Journal Entry', {custom_warehouse_job: frm.doc.name});
             }, __('View'));
         }
 
