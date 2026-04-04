@@ -4,6 +4,9 @@ app_publisher = "Sayanth"
 app_description = "3PL Warehouse Management System"
 app_email = "sayanth@example.com"
 app_license = "mit"
+source_link = "https://github.com/sayanthns/warehouse_3pl"
+app_logo_url = "/assets/warehouse_3pl/images/logo.png"
+docs_url = "https://warehouse-3pl-docs.vercel.app"
 
 # Apps
 # ------------------

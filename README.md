@@ -81,11 +81,11 @@ bench --site your-site.localhost run-tests --app warehouse_3pl
 
 ## Documentation
 
-Full user and developer documentation: **https://docs-site-brown-six.vercel.app**
+Full user and developer documentation: **https://warehouse-3pl-docs.vercel.app**
 
-- [User Guide](https://docs-site-brown-six.vercel.app/user/) — Step-by-step operations guide
-- [Developer Guide](https://docs-site-brown-six.vercel.app/guide/overview) — Architecture and customization
-- [End-to-End Flow](https://docs-site-brown-six.vercel.app/guide/end-to-end-flow) — Complete workflow with diagrams
+- [User Guide](https://warehouse-3pl-docs.vercel.app/user/) — Step-by-step operations guide
+- [Developer Guide](https://warehouse-3pl-docs.vercel.app/guide/overview) — Architecture and customization
+- [End-to-End Flow](https://warehouse-3pl-docs.vercel.app/guide/end-to-end-flow) — Complete workflow with diagrams
 
 ## Contributing
 
