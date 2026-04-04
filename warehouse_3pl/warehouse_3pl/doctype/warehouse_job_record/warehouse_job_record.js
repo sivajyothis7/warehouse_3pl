@@ -202,6 +202,9 @@ function render_overview(frm, data) {
             ${make_badge('Orders', data.counts.client_order, '#fd7e14', 'Client Order', {warehouse_job: frm.doc.name})}
             ${make_badge('Billing', data.counts.billing, '#6f42c1', 'Billing Transaction', {warehouse_job: frm.doc.name})}
             ${make_badge('Delivery Notes', data.counts.delivery_note, '#dc3545', 'Delivery Note', {custom_warehouse_job: frm.doc.name})}
+            ${make_badge('Invoices', data.counts.sales_invoice, '#20c997', 'Sales Invoice', {custom_warehouse_job: frm.doc.name})}
+            ${make_badge('Purchases', data.counts.purchase_invoice, '#e83e8c', 'Purchase Invoice', {custom_warehouse_job: frm.doc.name})}
+            ${make_badge('Expenses', data.counts.journal_entry, '#6610f2', 'Journal Entry', {custom_warehouse_job: frm.doc.name})}
         </div>
 
         <!-- Balance Bar -->

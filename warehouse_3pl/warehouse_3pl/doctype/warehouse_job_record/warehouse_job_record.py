@@ -226,6 +226,21 @@ def get_job_dashboard_data(job_name):
     billing_total = frappe.db.get_value("Billing Transaction",
         {"warehouse_job": job_name}, "sum(amount)") or 0
     dn_count = frappe.db.count("Delivery Note", {"custom_warehouse_job": job_name})
+    si_count = frappe.db.count("Sales Invoice", {"custom_warehouse_job": job_name, "docstatus": 1})
+    pi_count = frappe.db.count("Purchase Invoice", {"custom_warehouse_job": job_name, "docstatus": 1})
+    je_count = frappe.db.count("Journal Entry", {"custom_warehouse_job": job_name, "docstatus": 1})
+
+    # Live P&L from submitted docs
+    si_total = frappe.db.get_value("Sales Invoice",
+        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(grand_total)") or 0
+    pi_total = frappe.db.get_value("Purchase Invoice",
+        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(grand_total)") or 0
+    je_total = frappe.db.get_value("Journal Entry",
+        {"custom_warehouse_job": job_name, "docstatus": 1}, "sum(total_debit)") or 0
+
+    total_revenue = billing_total + si_total
+    total_cost = pi_total + je_total
+    gross_profit = total_revenue - total_cost
 
     # Calculate live stock in from submitted receivings
     total_in = 0
@@ -273,15 +288,17 @@ def get_job_dashboard_data(job_name):
         "total_in_qty": total_in,
         "total_out_qty": total_out,
         "balance_qty": balance,
-        "total_revenue": job.total_revenue or 0,
-        "total_cost": job.total_cost or 0,
-        "gross_profit": job.gross_profit or 0,
+        "total_revenue": total_revenue,
+        "total_cost": total_cost,
+        "gross_profit": gross_profit,
         "counts": {
             "asn": asn_count,
             "receiving": rcv_count,
             "client_order": order_count,
             "billing": billing_count,
-            "billing_total": billing_total,
             "delivery_note": dn_count,
+            "sales_invoice": si_count,
+            "purchase_invoice": pi_count,
+            "journal_entry": je_count,
         }
     }
