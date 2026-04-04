@@ -41,6 +41,7 @@ def make_receiving(source_name, target_doc=None):
                     "client": "client",
                     "warehouse_job": "warehouse_job",
                 },
+                "field_no_map": ["status"],
             },
             "ASN Line": {
                 "doctype": "Receiving Line",

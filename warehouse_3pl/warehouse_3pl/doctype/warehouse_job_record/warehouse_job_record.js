@@ -93,37 +93,40 @@ function render_overview(frm, data) {
     var gp_color = data.gross_profit >= 0 ? '#198754' : '#dc3545';
 
     var html = `
-    <div style="padding: 15px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <div style="padding: 24px 20px;">
+        <!-- Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; padding-bottom:16px; border-bottom:1px solid #eee;">
             <div>
-                <h3 style="margin:0;">${data.client_name || data.client}</h3>
-                <span style="color:#6c757d;">${frm.doc.name} &middot; ${data.date}</span>
+                <h3 style="margin:0 0 6px 0; font-size:20px;">${data.client_name || data.client}</h3>
+                <span style="color:#6c757d; font-size:13px;">${frm.doc.name} &middot; ${data.date}</span>
             </div>
-            <span style="background:${status_color}; color:#fff; padding:6px 16px; border-radius:20px; font-weight:600; font-size:13px;">
+            <span style="background:${status_color}; color:#fff; padding:7px 18px; border-radius:20px; font-weight:600; font-size:13px;">
                 ${data.job_status}
             </span>
         </div>
 
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin-bottom:20px;">
-            <div style="background:#f8f9fa; border-radius:8px; padding:16px; text-align:center; border-left:4px solid #0d6efd;">
-                <div style="font-size:24px; font-weight:700; color:#0d6efd;">${data.total_in_qty}</div>
-                <div style="color:#6c757d; font-size:12px; margin-top:4px;">Stock In</div>
+        <!-- KPI Cards -->
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:28px;">
+            <div style="background:#f8f9fa; border-radius:10px; padding:20px 16px; text-align:center; border-left:4px solid #0d6efd;">
+                <div style="font-size:26px; font-weight:700; color:#0d6efd;">${data.total_in_qty}</div>
+                <div style="color:#6c757d; font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Stock In</div>
             </div>
-            <div style="background:#f8f9fa; border-radius:8px; padding:16px; text-align:center; border-left:4px solid #fd7e14;">
-                <div style="font-size:24px; font-weight:700; color:#fd7e14;">${data.total_out_qty}</div>
-                <div style="color:#6c757d; font-size:12px; margin-top:4px;">Stock Out</div>
+            <div style="background:#f8f9fa; border-radius:10px; padding:20px 16px; text-align:center; border-left:4px solid #fd7e14;">
+                <div style="font-size:26px; font-weight:700; color:#fd7e14;">${data.total_out_qty}</div>
+                <div style="color:#6c757d; font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Stock Out</div>
             </div>
-            <div style="background:#f8f9fa; border-radius:8px; padding:16px; text-align:center; border-left:4px solid #198754;">
-                <div style="font-size:24px; font-weight:700; color:#198754;">${format_currency(data.total_revenue)}</div>
-                <div style="color:#6c757d; font-size:12px; margin-top:4px;">Revenue</div>
+            <div style="background:#f8f9fa; border-radius:10px; padding:20px 16px; text-align:center; border-left:4px solid #198754;">
+                <div style="font-size:26px; font-weight:700; color:#198754;">${format_currency(data.total_revenue)}</div>
+                <div style="color:#6c757d; font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Revenue</div>
             </div>
-            <div style="background:#f8f9fa; border-radius:8px; padding:16px; text-align:center; border-left:4px solid ${gp_color};">
-                <div style="font-size:24px; font-weight:700; color:${gp_color};">${format_currency(data.gross_profit)}</div>
-                <div style="color:#6c757d; font-size:12px; margin-top:4px;">Gross Profit (${gp_pct}%)</div>
+            <div style="background:#f8f9fa; border-radius:10px; padding:20px 16px; text-align:center; border-left:4px solid ${gp_color};">
+                <div style="font-size:26px; font-weight:700; color:${gp_color};">${format_currency(data.gross_profit)}</div>
+                <div style="color:#6c757d; font-size:12px; margin-top:6px; text-transform:uppercase; letter-spacing:0.5px;">Gross Profit (${gp_pct}%)</div>
             </div>
         </div>
 
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <!-- Linked Document Badges -->
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
             ${make_badge('ASN', data.counts.asn, '#0d6efd', 'ASN', {warehouse_job: frm.doc.name})}
             ${make_badge('Receiving', data.counts.receiving, '#198754', 'Receiving', {warehouse_job: frm.doc.name})}
             ${make_badge('Orders', data.counts.client_order, '#fd7e14', 'Client Order', {warehouse_job: frm.doc.name})}
@@ -131,9 +134,10 @@ function render_overview(frm, data) {
             ${make_badge('Delivery Notes', data.counts.delivery_note, '#dc3545', 'Delivery Note', {custom_warehouse_job: frm.doc.name})}
         </div>
 
-        <div style="margin-top:16px; padding:12px; background:#e8f5e9; border-radius:8px; display:flex; justify-content:space-between;">
-            <span><strong>Balance in Warehouse:</strong></span>
-            <span style="font-size:18px; font-weight:700; color:#198754;">${data.balance_qty} units</span>
+        <!-- Balance Bar -->
+        <div style="padding:16px 20px; background:linear-gradient(135deg, #e8f5e9, #f1f8e9); border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight:600; color:#2e7d32; font-size:14px;">Balance in Warehouse</span>
+            <span style="font-size:20px; font-weight:700; color:#198754;">${data.balance_qty} units</span>
         </div>
     </div>`;
 
