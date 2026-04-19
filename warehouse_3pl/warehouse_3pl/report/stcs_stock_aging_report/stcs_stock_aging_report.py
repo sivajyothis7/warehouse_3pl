@@ -42,6 +42,9 @@ def get_data(filters, as_of_date):
     conditions = ["sle.posting_date <= %(as_of_date)s", "sle.is_cancelled = 0"]
     params = {"as_of_date": as_of_date}
 
+    wh_columns_check = frappe.db.get_table_columns("Warehouse") or []
+    owning_client_col = "wh.custom_owning_client" if "custom_owning_client" in wh_columns_check else "''"
+
     if filters.get("warehouse"):
         conditions.append("sle.warehouse = %(warehouse)s")
         params["warehouse"] = filters["warehouse"]
@@ -51,14 +54,11 @@ def get_data(filters, as_of_date):
     if filters.get("item_group"):
         conditions.append("item.item_group = %(item_group)s")
         params["item_group"] = filters["item_group"]
-    if filters.get("owning_client"):
+    if filters.get("owning_client") and "custom_owning_client" in wh_columns_check:
         conditions.append("wh.custom_owning_client = %(owning_client)s")
         params["owning_client"] = filters["owning_client"]
 
     where_clause = "WHERE " + " AND ".join(conditions)
-
-    wh_columns_check = frappe.db.get_table_columns("Warehouse") or []
-    owning_client_col = "wh.custom_owning_client" if "custom_owning_client" in wh_columns_check else "''"
 
     # Aggregate remaining qty & earliest receipt date per (item, warehouse, batch)
     query = f"""

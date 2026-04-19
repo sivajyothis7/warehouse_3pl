@@ -69,6 +69,7 @@ def get_data(filters):
     # Use dynamic column names for custom fields that may not exist yet
     grn_columns_check = frappe.db.get_table_columns("Receiving") or []
     rcv_line_columns_check = frappe.db.get_table_columns("Receiving Line") or []
+    item_columns_check = frappe.db.get_table_columns("Item") or []
 
     truck_driver_col = "rcv.truck_driver_name" if "truck_driver_name" in grn_columns_check else "'' "
     driver_iqama_col = "rcv.truck_driver_iqama" if "truck_driver_iqama" in grn_columns_check else "'' "
@@ -76,6 +77,7 @@ def get_data(filters):
     rejected_qty_col = "line.rejected_qty" if "rejected_qty" in rcv_line_columns_check else "0"
     condition_col = "line.`condition`" if "condition" in rcv_line_columns_check else "'Good'"
     storage_loc_col = "line.storage_location" if "storage_location" in rcv_line_columns_check else "rcv.staging_location"
+    supplier_item_col = "item.custom_supplier_item_code" if "custom_supplier_item_code" in item_columns_check else "'' "
 
     query = f"""
         SELECT
@@ -95,7 +97,7 @@ def get_data(filters):
             {check_in_col} AS check_in_date,
             line.idx AS line_no,
             line.item_code AS item_code,
-            item.custom_supplier_item_code AS supplier_item_code,
+            {supplier_item_col} AS supplier_item_code,
             item.item_name AS item_description,
             COALESCE(line.expected_qty, 0) AS expected_qty,
             COALESCE(line.received_qty, 0) AS received_qty,

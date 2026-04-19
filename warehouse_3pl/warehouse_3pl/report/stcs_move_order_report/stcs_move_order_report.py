@@ -38,17 +38,25 @@ def get_data(filters):
     conditions = []
     params = {}
 
+    se_columns_check = frappe.db.get_table_columns("Stock Entry") or []
+    has_client_col = "custom_client" in se_columns_check or "client" in se_columns_check
+    has_job_col = "custom_warehouse_job" in se_columns_check
+
+    client_col = "se.custom_client" if "custom_client" in se_columns_check else ("se.client" if "client" in se_columns_check else "''")
+    job_col = "se.custom_warehouse_job" if "custom_warehouse_job" in se_columns_check else "''"
+    operator_col = "se.custom_operator" if "custom_operator" in se_columns_check else "se.owner"
+
     if filters.get("from_date"):
         conditions.append("se.posting_date >= %(from_date)s")
         params["from_date"] = filters["from_date"]
     if filters.get("to_date"):
         conditions.append("se.posting_date <= %(to_date)s")
         params["to_date"] = filters["to_date"]
-    if filters.get("client"):
-        conditions.append("se.custom_client = %(client)s")
+    if filters.get("client") and has_client_col:
+        conditions.append(f"{client_col} = %(client)s")
         params["client"] = filters["client"]
-    if filters.get("warehouse_job"):
-        conditions.append("se.custom_warehouse_job = %(warehouse_job)s")
+    if filters.get("warehouse_job") and has_job_col:
+        conditions.append(f"{job_col} = %(warehouse_job)s")
         params["warehouse_job"] = filters["warehouse_job"]
     if filters.get("move_type"):
         conditions.append("se.stock_entry_type = %(move_type)s")
@@ -58,18 +66,13 @@ def get_data(filters):
 
     where_clause = ("WHERE " + " AND ".join(conditions)) if conditions else ""
 
-    se_columns_check = frappe.db.get_table_columns("Stock Entry") or []
-    client_col = "se.custom_client" if "custom_client" in se_columns_check else ("se.client" if "client" in se_columns_check else "''")
-    job_col = "se.custom_warehouse_job" if "custom_warehouse_job" in se_columns_check else "''"
-    operator_col = "se.custom_operator" if "custom_operator" in se_columns_check else "se.owner"
-
     query = f"""
         SELECT
             se.name AS move_order_no,
             CONCAT(se.posting_date, ' ', se.posting_time) AS move_date,
             se.stock_entry_type AS move_type,
-            se.doctype AS source_doctype,
-            COALESCE(se.work_order, se.pro_doc_name, se.name) AS source_ref,
+            'Stock Entry' AS source_doctype,
+            se.name AS source_ref,
             {client_col} AS client,
             {job_col} AS warehouse_job,
             sed.idx AS line_no,

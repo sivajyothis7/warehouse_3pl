@@ -35,6 +35,13 @@ def get_data(filters):
     conditions = ["bin.actual_qty != 0 OR bin.reserved_qty != 0 OR bin.ordered_qty != 0"]
     params = {}
 
+    wh_columns_check = frappe.db.get_table_columns("Warehouse") or []
+    owning_client_col = "wh.custom_owning_client" if "custom_owning_client" in wh_columns_check else "''"
+    temp_zone_col = "wh.custom_temperature_zone" if "custom_temperature_zone" in wh_columns_check else "''"
+
+    item_columns_check = frappe.db.get_table_columns("Item") or []
+    supplier_item_col = "item.custom_supplier_item_code" if "custom_supplier_item_code" in item_columns_check else "''"
+
     if filters.get("warehouse"):
         conditions.append("bin.warehouse = %(warehouse)s")
         params["warehouse"] = filters["warehouse"]
@@ -44,18 +51,11 @@ def get_data(filters):
     if filters.get("item_group"):
         conditions.append("item.item_group = %(item_group)s")
         params["item_group"] = filters["item_group"]
-    if filters.get("owning_client"):
+    if filters.get("owning_client") and "custom_owning_client" in wh_columns_check:
         conditions.append("wh.custom_owning_client = %(owning_client)s")
         params["owning_client"] = filters["owning_client"]
 
     where_clause = "WHERE " + " AND ".join(f"({c})" for c in conditions)
-
-    wh_columns_check = frappe.db.get_table_columns("Warehouse") or []
-    owning_client_col = "wh.custom_owning_client" if "custom_owning_client" in wh_columns_check else "''"
-    temp_zone_col = "wh.custom_temperature_zone" if "custom_temperature_zone" in wh_columns_check else "''"
-
-    item_columns_check = frappe.db.get_table_columns("Item") or []
-    supplier_item_col = "item.custom_supplier_item_code" if "custom_supplier_item_code" in item_columns_check else "''"
 
     query = f"""
         SELECT
