@@ -412,6 +412,64 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "STCS Reports",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "STCS ASN Report",
+   "link_count": 0,
+   "link_to": "STCS ASN Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "STCS GRN Report",
+   "link_count": 0,
+   "link_to": "STCS GRN Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "STCS Move Order Report",
+   "link_count": 0,
+   "link_to": "STCS Move Order Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "STCS On-Hand Quantity Report",
+   "link_count": 0,
+   "link_to": "STCS On-Hand Quantity Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "STCS Stock Aging Report",
+   "link_count": 0,
+   "link_to": "STCS Stock Aging Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Settings",
    "link_count": 0,
    "onboard": 0,
