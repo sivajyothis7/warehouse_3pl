@@ -1,0 +1,75 @@
+---
+title: Warehouse 3PL
+description: Multi-client warehouse operations on ERPNext — receiving, fulfillment, billing, and more.
+template: splash
+hero:
+  tagline: A 3PL Warehouse Management System built on Frappe / ERPNext v15. Receive, store, pick, pack, ship, and bill — one app, many clients.
+  actions:
+    - text: Get Started
+      link: /getting-started/
+      icon: right-arrow
+      variant: primary
+    - text: User Guide
+      link: /user/overview/
+      variant: secondary
+    - text: GitHub
+      link: https://github.com/sivajyothis7/warehouse_3pl
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## What it does
+
+<CardGrid stagger>
+  <Card title="Inbound Management" icon="document">
+    **ASN → Receiving → QC → Putaway** with directed bin assignment and
+    zero-value stock tracking on behalf of each client.
+  </Card>
+  <Card title="Outbound Fulfillment" icon="rocket">
+    **Client Order → Wave → Pick → Pack → Ship** with FIFO/FEFO allocation
+    and automatic Delivery Note creation.
+  </Card>
+  <Card title="Automated Billing" icon="seti:db">
+    Every warehouse activity auto-logs a **Billing Transaction** with rate
+    lookup from per-client **Rate Cards**.
+  </Card>
+  <Card title="Configurable Rules" icon="setting">
+    **Inventory Policies** drive picking, putaway and QC rules per client,
+    zone, and item group — no code edits needed.
+  </Card>
+  <Card title="Built on ERPNext" icon="seti:stylus">
+    Extends the ERPNext Stock module — single source of truth, full audit
+    trail, standard accounting.
+  </Card>
+  <Card title="Multi-Client Isolation" icon="puzzle">
+    Shared warehouse, isolated data. Each client sees only their inventory
+    via Frappe role permissions.
+  </Card>
+</CardGrid>
+
+## Jump in
+
+<CardGrid>
+  <LinkCard
+    title="Getting Started"
+    description="Spin up the app on a Frappe bench and take your first order end-to-end."
+    href="/getting-started/"
+  />
+  <LinkCard
+    title="End-to-End Flow"
+    description="Follow one job from ASN to Delivery Note to Billing Transaction."
+    href="/guide/end-to-end-flow/"
+  />
+  <LinkCard
+    title="Architecture"
+    description="The 26 doctypes, the central Warehouse Job Record, and the utility engines."
+    href="/guide/architecture/"
+  />
+  <LinkCard
+    title="Policy Engine"
+    description="How Inventory Policy resolves rules by client → item group → zone."
+    href="/reference/policy-engine/"
+  />
+</CardGrid>
