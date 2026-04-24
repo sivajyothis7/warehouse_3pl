@@ -1,0 +1,222 @@
+{
+ "actions": [],
+ "creation": "2026-04-25 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "issingle": 1,
+ "field_order": [
+  "intro_html",
+  "section_client",
+  "client_name",
+  "client_code",
+  "company",
+  "column_break_1",
+  "default_temp_zone",
+  "section_inventory",
+  "item_count",
+  "qty_per_item",
+  "column_break_2",
+  "order_qty",
+  "section_warehouses",
+  "staging_warehouse",
+  "column_break_3",
+  "target_warehouse",
+  "section_billing",
+  "create_rate_card",
+  "receiving_rate",
+  "column_break_4",
+  "picking_rate",
+  "packing_rate",
+  "shipping_rate",
+  "section_results",
+  "last_run_status",
+  "last_run_at",
+  "last_run_log"
+ ],
+ "fields": [
+  {
+   "fieldname": "intro_html",
+   "fieldtype": "HTML",
+   "options": "<div class=\"alert alert-info\"><b>Demo Workflow Generator</b><br>Runs the full 3PL pipeline end-to-end: creates a demo client, items, warehouses and rate card, then drives an ASN through Receiving and Putaway, and a Client Order through Wave, Pick, Pack, and Delivery Note — raising Billing Transactions along the way. Safe to re-run; existing masters are reused.</div>"
+  },
+  {
+   "fieldname": "section_client",
+   "fieldtype": "Section Break",
+   "label": "Demo Client"
+  },
+  {
+   "fieldname": "client_name",
+   "fieldtype": "Data",
+   "label": "Client Name",
+   "default": "Acme Demo Goods",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_code",
+   "fieldtype": "Data",
+   "label": "Client Code",
+   "default": "ACME-DEMO",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "description": "Used on auto-generated Stock Entries and Delivery Note. Falls back to the Global Defaults company."
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_temp_zone",
+   "fieldtype": "Select",
+   "label": "Default Temperature Zone",
+   "options": "\nFrozen\nRefrigerated\nCool\nControlled Ambient\nAmbient",
+   "default": "Ambient"
+  },
+  {
+   "fieldname": "section_inventory",
+   "fieldtype": "Section Break",
+   "label": "Inventory"
+  },
+  {
+   "fieldname": "item_count",
+   "fieldtype": "Int",
+   "label": "Number of Demo Items",
+   "default": "3",
+   "reqd": 1,
+   "description": "How many demo SKUs to create / reuse (DEMO-SKU-001, -002, ...)."
+  },
+  {
+   "fieldname": "qty_per_item",
+   "fieldtype": "Float",
+   "label": "Receive Qty per Item",
+   "default": "50",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "order_qty",
+   "fieldtype": "Float",
+   "label": "Order Qty per Item",
+   "default": "12",
+   "reqd": 1,
+   "description": "Must be less than or equal to the received qty per item."
+  },
+  {
+   "fieldname": "section_warehouses",
+   "fieldtype": "Section Break",
+   "label": "Warehouses"
+  },
+  {
+   "fieldname": "staging_warehouse",
+   "fieldtype": "Link",
+   "label": "Staging Warehouse",
+   "options": "Warehouse",
+   "description": "Receiving dock warehouse. Leave blank to auto-create 'Demo Staging - <company_abbr>'."
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "target_warehouse",
+   "fieldtype": "Link",
+   "label": "Target (Bin) Warehouse",
+   "options": "Warehouse",
+   "description": "Destination bin for putaway. Leave blank to auto-create 'Demo Bin A-01 - <company_abbr>'."
+  },
+  {
+   "fieldname": "section_billing",
+   "fieldtype": "Section Break",
+   "label": "Billing"
+  },
+  {
+   "fieldname": "create_rate_card",
+   "fieldtype": "Check",
+   "label": "Create / Activate Demo Rate Card",
+   "default": "1"
+  },
+  {
+   "fieldname": "receiving_rate",
+   "fieldtype": "Currency",
+   "label": "Receiving Rate (per unit)",
+   "default": "0.50",
+   "depends_on": "create_rate_card"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "picking_rate",
+   "fieldtype": "Currency",
+   "label": "Picking Rate (per unit)",
+   "default": "0.60",
+   "depends_on": "create_rate_card"
+  },
+  {
+   "fieldname": "packing_rate",
+   "fieldtype": "Currency",
+   "label": "Packing Rate (per unit)",
+   "default": "0.40",
+   "depends_on": "create_rate_card"
+  },
+  {
+   "fieldname": "shipping_rate",
+   "fieldtype": "Currency",
+   "label": "Shipping Rate (per order)",
+   "default": "5.00",
+   "depends_on": "create_rate_card"
+  },
+  {
+   "fieldname": "section_results",
+   "fieldtype": "Section Break",
+   "label": "Last Run"
+  },
+  {
+   "fieldname": "last_run_status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nSuccess\nPartial\nFailed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_run_at",
+   "fieldtype": "Datetime",
+   "label": "Last Run At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_run_log",
+   "fieldtype": "Long Text",
+   "label": "Last Run Log",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-04-25 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Warehouse 3PL",
+ "name": "Demo Workflow Generator",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "states": [],
+ "track_changes": 1
+}
